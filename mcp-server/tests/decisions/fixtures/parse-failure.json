@@ -1,0 +1,38 @@
+[
+  {
+    "name": "parse-failure: malformed SQL on PROD -> DENY (fail-closed)",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "this is not sql" }
+    },
+    "expected": { "decision": "DENY", "risk": "UNRATED" }
+  },
+  {
+    "name": "parse-failure: malformed SQL on DEV (confirm) -> DENY (fail-closed)",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_dev__execute_sql",
+      "mcp_server_id": "supabase_dev",
+      "parameters": { "query": "*** !!! ***" }
+    },
+    "expected": { "decision": "DENY", "risk": "UNRATED" }
+  },
+  {
+    "name": "parse-failure: missing query key -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_dev__execute_sql",
+      "mcp_server_id": "supabase_dev",
+      "parameters": { "not_query": "SELECT 1" }
+    },
+    "expected": { "decision": "DENY", "risk": "UNRATED" }
+  },
+  {
+    "name": "parse-failure: empty query string -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "   " }
+    },
+    "expected": { "decision": "DENY", "risk": "UNRATED" }
+  }
+]

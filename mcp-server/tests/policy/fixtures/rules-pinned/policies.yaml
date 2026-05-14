@@ -1,0 +1,2 @@
+policies:
+  strict: { LOW: ALLOW, MED: DENY, HIGH: DENY, CRIT: DENY }

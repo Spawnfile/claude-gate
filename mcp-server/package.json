@@ -1,0 +1,29 @@
+{
+  "name": "@claude-gate/mcp-server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "claude-gate-mcp": "dist/index.js",
+    "gate-confirm": "dist/cli/gate-confirm.js"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "node-sql-parser": "^5.4.0",
+    "yaml": "^2.8.4",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}

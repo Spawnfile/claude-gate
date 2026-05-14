@@ -1,0 +1,11 @@
+global:
+  fail_policy:
+    prod: closed
+    dev: open
+    local: open
+  audit:
+    integrity: hash_chain
+    redact_params: true
+databases: []
+rule_packs: {}
+custom_rules: []

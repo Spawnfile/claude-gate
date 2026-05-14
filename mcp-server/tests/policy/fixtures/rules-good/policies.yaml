@@ -1,0 +1,11 @@
+policies:
+  strict:
+    LOW: ALLOW
+    MED: DENY
+    HIGH: DENY
+    CRIT: DENY
+  allow:
+    LOW: ALLOW
+    MED: ALLOW
+    HIGH: ALLOW
+    CRIT: ALLOW

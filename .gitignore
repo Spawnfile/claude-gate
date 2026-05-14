@@ -1,0 +1,22 @@
+node_modules/
+dist/
+# mcp-server/dist is the shipped plugin artifact: esbuild-bundled and
+# self-contained, so a bare `git clone` works with no `npm install`. It is
+# intentionally committed.
+!/mcp-server/dist/
+!/mcp-server/dist/**
+build/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+/tmp/
+*.tsbuildinfo
+
+# claude-gate runtime state created when the plugin runs against this repo
+# as its own project (audit log, config, setup state, etc.). Local-only.
+.claude-gate/

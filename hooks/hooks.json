@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-tool-use.sh\""
+          }
+        ],
+        "description": "claude-gate PreToolUse hook: classifies each tool call and returns an ALLOW / ASK / DENY decision"
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\""
+          }
+        ],
+        "description": "claude-gate notice channel (first-run, drift, debug banner)"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/user-prompt-submit.sh\""
+          }
+        ],
+        "description": "claude-gate per-prompt notice channel (debug banner; first-run carryover)"
+      }
+    ]
+  }
+}

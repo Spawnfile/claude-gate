@@ -1,0 +1,29 @@
+# rules/policies.yaml
+#
+# Four built-in policies. Source of truth: design doc Section 7.2.
+# Each policy maps (risk_level) -> (decision_verb).
+
+policies:
+  strict:
+    LOW:  ALLOW
+    MED:  DENY
+    HIGH: DENY
+    CRIT: DENY
+
+  confirm:
+    LOW:  ALLOW
+    MED:  ASK
+    HIGH: ASK
+    CRIT: DENY
+
+  dev:
+    LOW:  ALLOW
+    MED:  ALLOW
+    HIGH: ASK
+    CRIT: ASK
+
+  allow:
+    LOW:  ALLOW
+    MED:  ALLOW
+    HIGH: ALLOW
+    CRIT: ALLOW

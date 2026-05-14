@@ -1,0 +1,16 @@
+{
+  "name": "claude-gate",
+  "owner": {
+    "name": "Spawnfile",
+    "url": "https://github.com/Spawnfile"
+  },
+  "description": "Single-plugin marketplace for claude-gate: project-context-aware policy enforcement for Claude Code.",
+  "plugins": [
+    {
+      "name": "claude-gate",
+      "source": "./",
+      "description": "Project-context-aware policy enforcement for Claude Code. Parses MCP tool parameters with deterministic rules and applies different policies for prod, dev, and local databases. Defense-in-depth at the PreToolUse hook layer (L5).",
+      "version": "0.6.0"
+    }
+  ]
+}

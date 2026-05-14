@@ -1,0 +1,119 @@
+[
+  {
+    "name": "strict: SELECT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "SELECT id FROM customers WHERE id = 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "LOW", "resource": "supabase_prod" }
+  },
+  {
+    "name": "strict: EXPLAIN -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "EXPLAIN SELECT * FROM customers" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "LOW", "resource": "supabase_prod" }
+  },
+  {
+    "name": "strict: COMMIT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "COMMIT" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "LOW" }
+  },
+  {
+    "name": "strict: INSERT -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "INSERT INTO customers (id, email) VALUES (1, 'a@b')" }
+    },
+    "expected": { "decision": "DENY", "risk": "MED" }
+  },
+  {
+    "name": "strict: UPDATE WHERE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "UPDATE customers SET email = 'x' WHERE id = 1" }
+    },
+    "expected": { "decision": "DENY", "risk": "MED" }
+  },
+  {
+    "name": "strict: UPDATE no WHERE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "UPDATE customers SET email = 'x'" }
+    },
+    "expected": { "decision": "DENY", "risk": "HIGH" }
+  },
+  {
+    "name": "strict: DELETE WHERE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "DELETE FROM customers WHERE id = 1" }
+    },
+    "expected": { "decision": "DENY", "risk": "MED" }
+  },
+  {
+    "name": "strict: DELETE no WHERE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "DELETE FROM customers" }
+    },
+    "expected": { "decision": "DENY", "risk": "HIGH" }
+  },
+  {
+    "name": "strict: DROP TABLE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "DROP TABLE customers" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT" }
+  },
+  {
+    "name": "strict: TRUNCATE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "TRUNCATE TABLE customers" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT" }
+  },
+  {
+    "name": "strict: ALTER -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "ALTER TABLE customers ADD COLUMN x INT" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT" }
+  },
+  {
+    "name": "strict: GRANT -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "GRANT SELECT ON customers TO bob" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT" }
+  },
+  {
+    "name": "strict: REVOKE -> DENY",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "REVOKE SELECT ON customers FROM bob" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT" }
+  }
+]

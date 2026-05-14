@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install (workspace root)
+        run: npm ci
+      - name: Lint (tsc --noEmit)
+        run: npm run lint --workspace=mcp-server
+      - name: Build
+        run: npm run build --workspace=mcp-server
+      - name: Test
+        run: npm run test --workspace=mcp-server
+      - name: Banlist (no real DB drivers in tests)
+        run: npx vitest run tests/lint/banlist --root mcp-server

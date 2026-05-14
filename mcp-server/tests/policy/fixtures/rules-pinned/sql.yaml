@@ -1,0 +1,11 @@
+version: "1.2.0"
+name: sql
+description: "fixture default newest"
+applies_to:
+  tool_patterns: ["mcp__*sql*"]
+parser: sql
+risk_tiers:
+  LOW:  { statement_types: [SELECT] }
+  MED:  []
+  HIGH: []
+  CRIT: { statement_types: [DROP, TRUNCATE, MERGE] }

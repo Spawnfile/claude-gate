@@ -1,0 +1,11 @@
+version: "1.0.0"
+name: sql
+description: "fixture missing policies.yaml"
+applies_to:
+  tool_patterns: ["mcp__*sql*"]
+parser: sql
+risk_tiers:
+  LOW:  { statement_types: [SELECT] }
+  MED:  []
+  HIGH: []
+  CRIT: { statement_types: [DROP] }

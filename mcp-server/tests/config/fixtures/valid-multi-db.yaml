@@ -1,0 +1,39 @@
+version: 1
+
+global:
+  fail_policy:
+    prod: closed
+    dev: open
+    local: open
+  audit:
+    integrity: hash_chain
+    redact_params: true
+
+databases:
+  - name: supabase_prod
+    matchers:
+      - tool: "mcp__supabase_prod__*"
+        mcp_server_id: "supabase_prod"
+    env: prod
+    policy: strict
+    confidence: 0.99
+    discovered_from:
+      - scanner: env_scanner
+        file: ".env.prod"
+
+  - name: postgres_local
+    matchers:
+      - mcp_server_id: "postgres"
+    env: local
+    policy: allow
+    confidence: 0.85
+    discovered_from:
+      - scanner: env_scanner
+        file: ".env"
+
+rule_packs:
+  sql:
+    pinned_version: "1.0.0"
+    enabled: true
+
+custom_rules: []

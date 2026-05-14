@@ -1,0 +1,2 @@
+version: 1
+global: { this is: not valid yaml: at all

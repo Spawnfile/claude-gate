@@ -1,0 +1,5 @@
+policies:
+  strict:
+    LOW: ALLOW
+    MED: : DENY
+    HIGH ASK

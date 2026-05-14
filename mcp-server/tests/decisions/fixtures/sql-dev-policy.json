@@ -1,0 +1,83 @@
+[
+  {
+    "name": "dev: SELECT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "SELECT 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "LOW" }
+  },
+  {
+    "name": "dev: INSERT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "INSERT INTO customers (id) VALUES (1)" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "MED" }
+  },
+  {
+    "name": "dev: UPDATE WHERE -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "UPDATE customers SET x = 1 WHERE id = 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "MED" }
+  },
+  {
+    "name": "dev: DELETE WHERE -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "DELETE FROM customers WHERE id = 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "MED" }
+  },
+  {
+    "name": "dev: UPDATE no WHERE -> ASK",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "UPDATE customers SET email = 'x'" }
+    },
+    "expected": { "decision": "ASK", "risk": "HIGH" }
+  },
+  {
+    "name": "dev: DELETE no WHERE -> ASK",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "DELETE FROM customers" }
+    },
+    "expected": { "decision": "ASK", "risk": "HIGH" }
+  },
+  {
+    "name": "dev: DROP -> ASK",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "DROP TABLE customers" }
+    },
+    "expected": { "decision": "ASK", "risk": "CRIT" }
+  },
+  {
+    "name": "dev: TRUNCATE -> ASK",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "TRUNCATE TABLE customers" }
+    },
+    "expected": { "decision": "ASK", "risk": "CRIT" }
+  },
+  {
+    "name": "dev: REVOKE -> ASK",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_devbox__execute_sql",
+      "mcp_server_id": "supabase_devbox",
+      "parameters": { "query": "REVOKE SELECT ON customers FROM bob" }
+    },
+    "expected": { "decision": "ASK", "risk": "CRIT" }
+  }
+]

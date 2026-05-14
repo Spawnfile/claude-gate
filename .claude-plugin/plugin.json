@@ -1,0 +1,23 @@
+{
+  "name": "claude-gate",
+  "version": "0.6.0",
+  "description": "Project-context-aware policy enforcement for Claude Code. Parses MCP tool parameters with deterministic rules and applies different policies for prod, dev, and local databases. Defense-in-depth at the PreToolUse hook layer (L5). Not a replacement for DB-side roles (L9).",
+  "author": {
+    "name": "claude-gate contributors"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Spawnfile/claude-gate",
+  "repository": "https://github.com/Spawnfile/claude-gate.git",
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "policy",
+    "security",
+    "agent-governance",
+    "database",
+    "sql",
+    "audit-log",
+    "defense-in-depth",
+    "pretooluse-hook"
+  ]
+}

@@ -1,0 +1,33 @@
+databases:
+  - name: supabase_prod
+    matchers:
+      - tool: "mcp__plugin_*_supabase_prod__*"
+        mcp_server_id: "supabase_prod"
+    env: prod
+    policy: strict
+    confidence: 0.99
+    discovered_from: []
+  - name: supabase_dev
+    matchers:
+      - tool: "mcp__plugin_*_supabase_dev__*"
+        mcp_server_id: "supabase_dev"
+    env: dev
+    policy: confirm
+    confidence: 0.95
+    discovered_from: []
+  - name: postgres_local
+    matchers:
+      - tool: "mcp__plugin_*_postgres__*"
+        mcp_server_id: "postgres"
+    env: local
+    policy: allow
+    confidence: 0.9
+    discovered_from: []
+  - name: supabase_devbox
+    matchers:
+      - tool: "mcp__plugin_*_supabase_devbox__*"
+        mcp_server_id: "supabase_devbox"
+    env: dev
+    policy: dev
+    confidence: 0.9
+    discovered_from: []

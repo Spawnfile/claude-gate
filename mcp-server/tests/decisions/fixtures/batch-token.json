@@ -1,0 +1,44 @@
+[
+  {
+    "name": "batch-token: covers UPDATE WHERE on DEV -> ALLOW",
+    "session_setup": {
+      "batch_tokens": [
+        { "pattern": "sql:supabase_dev", "expires_in_ms": 60000, "remaining_count": 5 }
+      ]
+    },
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_dev__execute_sql",
+      "mcp_server_id": "supabase_dev",
+      "parameters": { "query": "UPDATE customers SET x = 1 WHERE id = 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "MED", "via": "batch-token" }
+  },
+  {
+    "name": "batch-token: does NOT cover CRIT on PROD -> DENY",
+    "session_setup": {
+      "batch_tokens": [
+        { "pattern": "sql:supabase_prod", "expires_in_ms": 60000, "remaining_count": 5 }
+      ]
+    },
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_prod__execute_sql",
+      "mcp_server_id": "supabase_prod",
+      "parameters": { "query": "DROP TABLE customers" }
+    },
+    "expected": { "decision": "DENY", "risk": "CRIT", "via": "none" }
+  },
+  {
+    "name": "batch-token: exhausted count -> ASK",
+    "session_setup": {
+      "batch_tokens": [
+        { "pattern": "sql:supabase_dev", "expires_in_ms": 60000, "remaining_count": 0 }
+      ]
+    },
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_supabase_dev__execute_sql",
+      "mcp_server_id": "supabase_dev",
+      "parameters": { "query": "UPDATE customers SET x = 1 WHERE id = 1" }
+    },
+    "expected": { "decision": "ASK", "risk": "MED", "via": "none" }
+  }
+]

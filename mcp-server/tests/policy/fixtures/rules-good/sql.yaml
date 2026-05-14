@@ -1,0 +1,19 @@
+version: "1.0.0"
+name: sql
+description: "SQL rule pack fixture"
+applies_to:
+  tool_patterns:
+    - "mcp__*supabase*__execute_sql*"
+parser: sql
+risk_tiers:
+  LOW:
+    statement_types: [SELECT, EXPLAIN]
+  MED:
+    - statement_type: INSERT
+    - statement_type: UPDATE
+      requires: [WHERE]
+  HIGH:
+    - statement_type: UPDATE
+      forbids: [WHERE]
+  CRIT:
+    statement_types: [DROP, TRUNCATE]

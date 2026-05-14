@@ -1,0 +1,69 @@
+# rules/sql.yaml
+#
+# SQL rule pack v1.0.0. Source of truth: design doc Section 7.1.
+# Tier semantics:
+#   LOW  - read-only and transactional plumbing
+#   MED  - row-bounded mutations and CTAS
+#   HIGH - unbounded mutations and bulk merges
+#   CRIT - DDL and privilege changes
+
+version: "1.0.0"
+name: sql
+description: "SQL operation risk classification"
+applies_to:
+  tool_patterns:
+    - "mcp__*supabase*__execute_sql*"
+    - "mcp__*postgres*__*query*"
+    - "mcp__*postgres*__execute_sql*"
+    - "mcp__*mysql*__*query*"
+    - "mcp__*db*__execute_sql*"
+parser: sql
+
+risk_tiers:
+  LOW:
+    statement_types:
+      - SELECT
+      - EXPLAIN
+      - SHOW
+      - DESCRIBE
+    transactional:
+      - BEGIN
+      - START
+      - COMMIT
+      - ROLLBACK
+      - SAVEPOINT
+      - RELEASE
+
+  MED:
+    - statement_type: INSERT
+    - statement_type: UPDATE
+      requires:
+        - WHERE
+    - statement_type: DELETE
+      requires:
+        - WHERE
+    - statement_type: CREATE TABLE
+      pattern: "AS SELECT"
+
+  HIGH:
+    - statement_type: UPDATE
+      forbids:
+        - WHERE
+    - statement_type: DELETE
+      forbids:
+        - WHERE
+    - statement_type: MERGE
+    - statement_type: COPY
+    - statement_type: LOAD
+
+  CRIT:
+    statement_types:
+      - DROP
+      - TRUNCATE
+      - ALTER
+      - GRANT
+      - REVOKE
+      - CREATE USER
+      - DROP USER
+      - CREATE ROLE
+      - DROP ROLE

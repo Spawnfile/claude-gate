@@ -1,0 +1,29 @@
+[
+  {
+    "name": "no resource match: Bash -> ALLOW (untyped)",
+    "input": {
+      "tool_name": "Bash",
+      "mcp_server_id": null,
+      "parameters": { "command": "echo hi" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "UNRATED", "resource": null }
+  },
+  {
+    "name": "no resource match: Read -> ALLOW",
+    "input": {
+      "tool_name": "Read",
+      "mcp_server_id": null,
+      "parameters": { "file_path": "/etc/hostname" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "UNRATED", "resource": null }
+  },
+  {
+    "name": "no resource match: unrelated MCP server -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_other_otherserver__do_thing",
+      "mcp_server_id": "otherserver",
+      "parameters": {}
+    },
+    "expected": { "decision": "ALLOW", "risk": "UNRATED", "resource": null }
+  }
+]

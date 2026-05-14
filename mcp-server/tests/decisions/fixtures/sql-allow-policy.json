@@ -1,0 +1,56 @@
+[
+  {
+    "name": "allow: SELECT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "SELECT 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "LOW", "resource": "postgres_local" }
+  },
+  {
+    "name": "allow: UPDATE no WHERE -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "UPDATE x SET y = 1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "HIGH" }
+  },
+  {
+    "name": "allow: DROP -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "DROP TABLE x" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "CRIT" }
+  },
+  {
+    "name": "allow: GRANT -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "GRANT SELECT ON x TO bob" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "CRIT" }
+  },
+  {
+    "name": "allow: MERGE -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "MERGE INTO x USING y ON 1=1" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "HIGH" }
+  },
+  {
+    "name": "allow: TRUNCATE -> ALLOW",
+    "input": {
+      "tool_name": "mcp__plugin_claude-gate_postgres__execute_sql",
+      "mcp_server_id": "postgres",
+      "parameters": { "query": "TRUNCATE TABLE x" }
+    },
+    "expected": { "decision": "ALLOW", "risk": "CRIT" }
+  }
+]
