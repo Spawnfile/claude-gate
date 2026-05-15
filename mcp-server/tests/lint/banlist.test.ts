@@ -1,7 +1,6 @@
 // mcp-server/tests/lint/banlist.test.ts
 import { describe, expect, test } from "vitest";
-import { readFileSync } from "node:fs";
-import { globSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 const FORBIDDEN_DB_PACKAGES = [
@@ -17,9 +16,11 @@ const FORBIDDEN_DB_PACKAGES = [
 ];
 
 function runScan(packages: string[]): string[] {
-  const testFiles = globSync("tests/**/*.test.ts", {
-    cwd: resolve(__dirname, "../.."),
-  });
+  const testsRoot = resolve(__dirname, "..");
+  const entries = readdirSync(testsRoot, { recursive: true }) as string[];
+  const testFiles = entries
+    .filter((entry) => entry.endsWith(".test.ts"))
+    .map((entry) => `tests/${entry.split(/[\\/]/).join("/")}`);
 
   expect(testFiles.length).toBeGreaterThan(0);
 
